@@ -1,6 +1,6 @@
 package ChatProject.DockSeosil.member.Entity;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
+// import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,7 +31,7 @@ public class Member {
 	private String email;
 
 	// 비밀번호 암호화
-	public void encodePassword(PasswordEncoder passwordEncoder){
-		this.password = passwordEncoder.encode(this.password);
-	}
+	// public void encodePassword(PasswordEncoder passwordEncoder){
+	// 	this.password = passwordEncoder.encode(this.password);
+	// }
 }
