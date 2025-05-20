@@ -2,6 +2,7 @@ package ChatProject.DockSeosil.domain.chat.chatRoom.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
@@ -16,7 +17,7 @@ import ChatProject.DockSeosil.domain.chat.chatRoom.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/chat/room")
+@RequestMapping("/api/chat/room")
 @RequiredArgsConstructor
 public class ChatMessageController {
 
@@ -24,11 +25,9 @@ public class ChatMessageController {
 
 	@GetMapping("/{roomId}")
 	@ResponseBody
-	public String showRoom(
-			@PathVariable final Long roomId,
-			@RequestParam(defaultValue = "NoName") final String writerName
- 		){
-		return "%d번 채팅방입니다. writer : %s".formatted(roomId,writerName);
+	public ResponseEntity<ChatRoom> getRoomById(@PathVariable final Long roomId){
+		ChatRoom findRoom = chatRoomService.findById(roomId);
+		return ResponseEntity.ok(findRoom);
 	}
 
 	@GetMapping("/make")
@@ -39,7 +38,7 @@ public class ChatMessageController {
 	@PostMapping("/make")
 	public String make(final String name){
 		chatRoomService.make(name);
-		return "redirect:/chat/room/make";
+		return "redirect:/api/chat/room/make";
 	}
 
 	@GetMapping("/list")
