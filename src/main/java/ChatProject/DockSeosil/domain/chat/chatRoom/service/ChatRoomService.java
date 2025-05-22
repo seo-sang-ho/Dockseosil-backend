@@ -17,13 +17,14 @@ public class ChatRoomService {
 
 	private final ChatRoomRepository chatRoomRepository;
 
-	public void make(String name) {
+	public Long make(String name) {
 
 		ChatRoom chatRoom = ChatRoom.builder()
 			.name(name)
 			.build();
 
 		chatRoomRepository.save(chatRoom);
+		return chatRoom.getId();
 	}
 
 	public List<ChatRoom> findAll() {

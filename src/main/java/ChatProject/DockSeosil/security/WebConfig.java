@@ -9,6 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addMapping("/api/**")
 			.allowedOrigins("http://localhost:5173")
 			.allowedMethods("GET","POST","PUT","DELETE","OPTIONS")
-			.allowCredentials(true);
+			.allowCredentials(true)
+			.allowedHeaders("*");
 	}
 }
