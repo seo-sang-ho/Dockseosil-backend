@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
@@ -15,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import ChatProject.DockSeosil.domain.chat.chatRoom.dto.ChatRoomResponseDTO;
 import ChatProject.DockSeosil.domain.chat.chatRoom.entity.ChatRoom;
 import ChatProject.DockSeosil.domain.chat.chatRoom.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@RestController
 @RequestMapping("/api/chat/room")
 @RequiredArgsConstructor
 public class ChatMessageController {
@@ -28,13 +31,14 @@ public class ChatMessageController {
 	private final ChatRoomService chatRoomService;
 
 	@GetMapping("/{roomId}")
-	@ResponseBody
+	@Transactional(readOnly = true)
 	public ResponseEntity<ChatRoom> getRoomById(@PathVariable final Long roomId){
 		ChatRoom findRoom = chatRoomService.findById(roomId);
 		return ResponseEntity.ok(findRoom);
 	}
 
 	@PostMapping("/make")
+	@Transactional
 	public ResponseEntity<Map<String, Object>> make(@RequestBody Map<String, String> request) {
 		String name = request.get("name");
 
@@ -46,10 +50,19 @@ public class ChatMessageController {
 		));
 	}
 
-
 	@GetMapping("/list")
-	@ResponseBody
-	public List<ChatRoom> list(){
-		return chatRoomService.findAll();
+	@Transactional(readOnly = true)
+	public ResponseEntity<List<ChatRoomResponseDTO>> list(){
+		return ResponseEntity.ok(chatRoomService.findAllDTO());
+	}
+
+	@PostMapping("/{roomId}/write")
+	@Transactional
+	public ResponseEntity write(@PathVariable final Long roomId, final String writerName,final String content) {
+		chatRoomService.write(roomId,writerName,content);
 	}
 }
+
+
+
+
