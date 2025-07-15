@@ -24,6 +24,8 @@ dependencies {
 
 	// spring web
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.projectlombok:lombok:1.18.26'
+	implementation 'org.projectlombok:lombok:1.18.26'
 
 	// lombok
 	compileOnly 'org.projectlombok:lombok'
@@ -36,6 +38,9 @@ dependencies {
 
 	//thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	//WebSocket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
 	//spring security 추가
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
